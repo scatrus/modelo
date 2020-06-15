@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="/scripts.js"></script>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+
+<body>
+    <h1>Modelo</h1>
+
+    <form action="/" method="post">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome">
+
+        <label for="sobrenome">Sobrenome</label>
+        <input type="text" id="sobrenome">
+
+        <button onclick="cadastrar(event)">Cadastrar</button>
+    </form>
+
+    <button onclick="listar()">Listar Usuários</button>
+    <div style="overflow-x: auto;">
+    <table>
+        <div id="linhas">
+            <!-- Aqui gera os dados dinamicos -->
+        </div>
+    </table>
+    </div>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</body>
+
+</html>
