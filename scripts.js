@@ -43,7 +43,7 @@ function listar() {
                 sobrenome.innerHTML = `${usuario.last_name}`
                 novalinha.appendChild(sobrenome)
                 const botoes = document.createElement('td')
-                botoes.innerHTML = `<button>Alterar</button> <button onclick="excluir(this)">Excluir</button>`
+                botoes.innerHTML = `<button onclick="alterar(this)">Alterar</button> <button onclick="excluir(this)">Excluir</button>`
                 novalinha.appendChild(botoes)
 
             })
@@ -56,6 +56,8 @@ function cadastrar(event) {
 
     const nome = document.querySelector('#nome').value
     const sobrenome = document.querySelector('#sobrenome').value
+
+    console.log(nome,sobrenome)
 
     axios.post('http://localhost:3000/',
         {
@@ -82,5 +84,45 @@ function excluir(el){
         listar()
     })
 }
+
+function alterar(el){
+
+    var id = el.parentNode.parentNode.querySelectorAll("td")[0].textContent
+    var nome = el.parentNode.parentNode.querySelectorAll("td")[1].textContent
+    var sobrenome = el.parentNode.parentNode.querySelectorAll("td")[2].textContent
+
+    document.querySelector('#nome').value = nome
+    document.querySelector('#sobrenome').value = sobrenome
+
+
+    var div = document.getElementById('linhas')
+
+        while (div.firstChild) {
+            div.removeChild(div.firstChild);
+          }
+    
+    document.querySelector('#cadastrar').innerHTML = "Alterar"
+    var botao = document.querySelector('#cadastrar')
+    botao.setAttribute( "onClick", `concluir(${id})`);
+
+}
+
+function concluir(id){
+    axios.put('/' + id, {
+        first_name: document.querySelector('#nome').value,
+        last_name: document.querySelector('#sobrenome').value
+    })
+    
+    .then(function (res) {
+        alert(res.data);
+        listar()
+    })
+
+    document.querySelector('#cadastrar').innerHTML = "Cadastrar"
+    var botao = document.querySelector('#cadastrar')
+    botao.setAttribute( "onClick", "cadastrar(event)");
+
+}
+
 
 listar()
