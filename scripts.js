@@ -10,44 +10,44 @@ function listar() {
 
         while (div.firstChild) {
             div.removeChild(div.firstChild);
-          }
-        
+        }
+
+        var novalinha = document.createElement('tr')
+        div.appendChild(novalinha)
+
+        const cel = document.createElement('th')
+        cel.innerHTML = 'Id'
+        novalinha.appendChild(cel)
+        const nome = document.createElement('th')
+        nome.innerHTML = 'Usuário'
+        novalinha.appendChild(nome)
+        const sobrenome = document.createElement('th')
+        sobrenome.innerHTML = 'Sobrenome'
+        novalinha.appendChild(sobrenome)
+
+
+        console.log(users.length)
+        users.map(usuario => {
+
+            var div = document.getElementById('linhas')
             var novalinha = document.createElement('tr')
             div.appendChild(novalinha)
 
-            const cel = document.createElement('th')
-            cel.innerHTML = 'Id'
+            const cel = document.createElement('td')
+            cel.innerHTML = `${usuario.id}`
             novalinha.appendChild(cel)
-            const nome = document.createElement('th')
-            nome.innerHTML = 'Usuário'
+            const nome = document.createElement('td')
+            nome.innerHTML = `${usuario.first_name}`
             novalinha.appendChild(nome)
-            const sobrenome = document.createElement('th')
-            sobrenome.innerHTML = 'Sobrenome'
+            const sobrenome = document.createElement('td')
+            sobrenome.innerHTML = `${usuario.last_name}`
             novalinha.appendChild(sobrenome)
+            const botoes = document.createElement('td')
+            botoes.innerHTML = `<button onclick="alterar(this)">Alterar</button> <button onclick="excluir(this)">Excluir</button>`
+            novalinha.appendChild(botoes)
 
+        })
 
-            console.log(users.length)
-            users.map(usuario => {
-
-                var div = document.getElementById('linhas')
-                var novalinha = document.createElement('tr')
-                div.appendChild(novalinha)
-
-                const cel = document.createElement('td')
-                cel.innerHTML = `${usuario.id}`
-                novalinha.appendChild(cel)
-                const nome = document.createElement('td')
-                nome.innerHTML = `${usuario.first_name}`
-                novalinha.appendChild(nome)
-                const sobrenome = document.createElement('td')
-                sobrenome.innerHTML = `${usuario.last_name}`
-                novalinha.appendChild(sobrenome)
-                const botoes = document.createElement('td')
-                botoes.innerHTML = `<button onclick="alterar(this)">Alterar</button> <button onclick="excluir(this)">Excluir</button>`
-                novalinha.appendChild(botoes)
-
-            })
-        
     }
 }
 
@@ -57,7 +57,7 @@ function cadastrar(event) {
     const nome = document.querySelector('#nome').value
     const sobrenome = document.querySelector('#sobrenome').value
 
-    console.log(nome,sobrenome)
+    console.log(nome, sobrenome)
 
     axios.post('http://localhost:3000/',
         {
@@ -72,20 +72,20 @@ function cadastrar(event) {
         .catch(function (error) {
             console.log(error);
         });
-        listar()
+    listar()
 }
 
-function excluir(el){
+function excluir(el) {
 
     var id = el.parentNode.parentNode.firstChild.textContent
     axios.delete('/' + id)
-    .then(function (res) {
-        alert(res.data);
-        listar()
-    })
+        .then(function (res) {
+            alert(res.data);
+            listar()
+        })
 }
 
-function alterar(el){
+function alterar(el) {
 
     var id = el.parentNode.parentNode.querySelectorAll("td")[0].textContent
     var nome = el.parentNode.parentNode.querySelectorAll("td")[1].textContent
@@ -97,30 +97,32 @@ function alterar(el){
 
     var div = document.getElementById('linhas')
 
-        while (div.firstChild) {
-            div.removeChild(div.firstChild);
-          }
-    
+    while (div.firstChild) {
+        div.removeChild(div.firstChild);
+    }
+
     document.querySelector('#cadastrar').innerHTML = "Alterar"
     var botao = document.querySelector('#cadastrar')
-    botao.setAttribute( "onClick", `concluir(${id})`);
+    botao.setAttribute("onClick", `concluir(${id})`);
 
 }
 
-function concluir(id){
+function concluir(id) {
     axios.put('/' + id, {
         first_name: document.querySelector('#nome').value,
         last_name: document.querySelector('#sobrenome').value
     })
-    
-    .then(function (res) {
-        alert(res.data);
-        listar()
-    })
+
+        .then(function (res) {
+            alert(res.data);
+            listar()
+        })
 
     document.querySelector('#cadastrar').innerHTML = "Cadastrar"
     var botao = document.querySelector('#cadastrar')
-    botao.setAttribute( "onClick", "cadastrar(event)");
+    botao.setAttribute("onClick", "cadastrar(event)");
+    document.querySelector('#nome').value = ""
+    document.querySelector('#sobrenome').value = ""
 
 }
 
