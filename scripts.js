@@ -1,8 +1,8 @@
 function listar() {
     axios.get('http://localhost:3000/listar')
-        .then(response => criaListaDinamica(response.data))
+        .then(response => criaTabDinamica(response.data))
         .catch(error => console.log(error))
-    const criaListaDinamica = (users) => {
+    const criaTabDinamica = (users) => {
 
 
         var div = document.getElementById('linhas')
@@ -46,16 +46,21 @@ function listar() {
     }
 }
 
-//erro 500
 function cadastrar(event) {
     event.preventDefault();
 
-axios({
-    method: 'post',
-    url: '/',
-    data: {
-      firstName: 'Fred',
-      lastName: 'Flintstone'
-    }
-})
+    const nome = document.querySelector('#nome').value
+    const sobrenome = document.querySelector('#sobrenome').value
+
+    axios.post('http://localhost:3000/',
+        {
+            first_name: nome,
+            last_name: sobrenome
+        })
+        .then(function (res) {
+            console.log(res.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
