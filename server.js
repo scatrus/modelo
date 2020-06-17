@@ -2,13 +2,9 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-var knex = require('knex')({
-    client: 'sqlite3',
-    connection: {
-        filename: "./db.sqlite3"
-    },
-    useNullAsDefault: true
-});
+const knexcon = require('knex')
+const configuration = require('./knexfile')
+const knex = knexcon(configuration.development)
 
 app.use(express.static(__dirname));
 app.use(express.json());

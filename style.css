@@ -1,8 +1,10 @@
-table {
-    border-collapse: collapse;
-    }
-  
+th,tr,td{
+  border-width: 1px;
+  border-style: solid;
+}
+
   th, td {
+
     text-align: center;
     padding: 8px;
   }
@@ -10,4 +12,14 @@ table {
 
 h1{
   text-align: center;
+}
+
+#conteudo{
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#form{
+  margin-bottom: 20px;
 }
